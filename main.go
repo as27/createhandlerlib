@@ -46,6 +46,10 @@ func main() {
 		fmt.Println("Version:", version)
 		os.Exit(-1)
 	}
+	if *name == "" {
+		log.Println("Please specify a name for the generated package!")
+		os.Exit(-1)
+	}
 	var r io.Reader
 	var err error
 	switch {
@@ -56,7 +60,7 @@ func main() {
 			log.Println(err)
 		}
 	default:
-		log.Println("Please set flags for source and package name!")
+		log.Println("Please set a flag for a source!")
 		os.Exit(-1)
 	}
 	libBytes, err := createLibBytes(r)
