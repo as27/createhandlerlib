@@ -42,17 +42,16 @@ func main() {
 	outDir := flag.String("dst", "", "Subfolder where the package is stored.")
 	versFlag := flag.Bool("v", false, "Prints the version")
 	flag.Parse()
-	if *versFlag {
-		fmt.Println("Version:", version)
-		os.Exit(-1)
-	}
-	if *name == "" {
-		log.Println("Please specify a name for the generated package!")
-		os.Exit(-1)
-	}
+
 	var r io.Reader
 	var err error
 	switch {
+	case *versFlag:
+		fmt.Println("Version:", version)
+		os.Exit(-1)
+	case *name == "":
+		log.Println("Please specify a name for the generated package!")
+		os.Exit(-1)
 	case *url != "":
 		log.Println("Loading ", *url)
 		r, err = loadLib(*url)

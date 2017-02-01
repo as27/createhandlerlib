@@ -5,7 +5,9 @@ Uses a text based file and creates a go package, which can be used as a http.Han
 
 To install this tool just use go get:
 
-```go get github.com/as27/createhandlerlib```
+```
+go get github.com/as27/createhandlerlib
+```
 
 ## How to use
 
@@ -17,4 +19,8 @@ It is also compulsory to specify a source flag. At the moment the following sour
 
 Example:
 
-```createhandlerlib -url http://example.com/cdn/javascriptlib.js -pkg jslib```
+```
+createhandlerlib -url http://example.com/cdn/javascriptlib.js -pkg jslib
+```
+
+The generated go package will be generated at `jslib/jslib.go`
