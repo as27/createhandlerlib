@@ -33,7 +33,7 @@ func Handler(w http.ResponseWriter, r *http.Request){
 
 var libBytes = {{.LibBytes}}`
 
-const version = "v1.0.1"
+const version = "v1.0.2"
 
 type tmplStruct struct {
 	Packagename string
