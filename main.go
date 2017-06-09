@@ -27,6 +27,7 @@ const Version = "{{.Version}}"
 
 // Handler can be used from http Server
 func Handler(w http.ResponseWriter, r *http.Request){
+	{{with .TextType}}w.Header().Add("Content-Type", "{{.}}"){{end}}
     w.Write(libBytes)
 }
 
@@ -38,10 +39,13 @@ type tmplStruct struct {
 	Packagename string
 	LibBytes    string
 	Version     string
+	TextType    string
 }
 
 func main() {
 	url := flag.String("url", "", "When set, the lib is loaded from a url")
+	src := flag.String("src", "", "Use a local file instead of a url")
+	textType := flag.String("type", "", "Specify a text type. For example text/css")
 	name := flag.String("pkg", "", "Package name")
 	pv := flag.String("pv", "", "Package Version")
 	outDir := flag.String("dst", "", "Subfolder where the package is stored.")
@@ -63,6 +67,12 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
+	case *src != "":
+		log.Println("Using file ", *src)
+		r, err = os.Open(*src)
+		if err != nil {
+			log.Println(err)
+		}
 	default:
 		log.Println("Please set a flag for a source!")
 		os.Exit(-1)
@@ -72,6 +82,7 @@ func main() {
 		Packagename: *name,
 		LibBytes:    string(libBytes),
 		Version:     *pv,
+		TextType:    *textType,
 	}
 	t := template.Must(template.New("lib").Parse(tmpl))
 	buf := &bytes.Buffer{}
